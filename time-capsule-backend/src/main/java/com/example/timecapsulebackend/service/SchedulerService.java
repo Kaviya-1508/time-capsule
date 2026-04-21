@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class SchedulerService {
                 .findByDeliveryTimeLessThanEqualAndStatus(now, "PENDING");
 
         for (Capsule capsule : ready) {
-            boolean sent = emailService.sendEmail(capsule);
+            boolean sent = emailService.sendCapsuleEmail(capsule);  // ✅ Changed from sendEmail()
             if (sent) {
                 capsule.setStatus("DELIVERED");
                 capsule.setDeliveredAt(now);
