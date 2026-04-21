@@ -1,5 +1,5 @@
-FROM eclipse-temurin:25-jdk-jammy
+FROM openjdk:17-jdk-slim
 WORKDIR /app
-COPY target/time-capsule-backend-1.0.0.jar app.jar
+COPY target/*.jar app.jar
 EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
