@@ -14,7 +14,9 @@ import java.util.List;
 @RequestMapping("/api/capsules")
 @CrossOrigin(origins = {
         "http://localhost:5173",
-        "https://time-capsule-frontend.vercel.app"
+        "http://localhost:3000",
+        "https://time-capsule-frontend-sepia.vercel.app",
+        "https://time-capsule-frontend-fkn8fp56i-kaviya-1508s-projects.vercel.app"
 })
 @RequiredArgsConstructor
 public class CapsuleController {

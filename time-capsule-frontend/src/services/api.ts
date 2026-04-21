@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { CapsuleRequest, CapsuleResponse } from '../types';
 
-// Change this after deploying backend
-const API_URL = "https://time-capsule-backend.onrender.com/api";
+// ✅ CHANGE THIS LINE
+const API_URL = "https://time-capsule-backend-b9yg.onrender.com/api";
 
 const api = axios.create({
     baseURL: API_URL,
