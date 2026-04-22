@@ -19,18 +19,30 @@ public class SchedulerService {
     private final EmailService emailService;
 
     @Scheduled(fixedRateString = "${scheduler.fixed-rate:60000}")
+    public void scheduledCheck() {
+        log.info("🔍 Scheduled check running...");
+        checkAndDeliver();
+    }
+
     public void checkAndDeliver() {
         LocalDateTime now = LocalDateTime.now();
+        log.info("⏰ Current time: {}", now);
+        
         List<Capsule> ready = capsuleRepository
                 .findByDeliveryTimeLessThanEqualAndStatus(now, "PENDING");
 
+        log.info("📦 Found {} capsule(s) ready for delivery", ready.size());
+
         for (Capsule capsule : ready) {
-            boolean sent = emailService.sendCapsuleEmail(capsule);  // ✅ Changed from sendEmail()
+            log.info("🚀 Attempting delivery for capsule: {}", capsule.getId());
+            boolean sent = emailService.sendCapsuleEmail(capsule);
             if (sent) {
                 capsule.setStatus("DELIVERED");
                 capsule.setDeliveredAt(now);
                 capsuleRepository.save(capsule);
                 log.info("✅ Delivered: {}", capsule.getId());
+            } else {
+                log.error("❌ Failed to deliver: {}", capsule.getId());
             }
         }
     }
